@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.epbox.opencv4android.R;
+import com.epbox.opencv4android.helper.PermissionHelper;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -42,7 +43,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class MainActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class MainActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 ,PermissionHelper.OnCallBack{
 
     private static final String TAG = "OCVSample::Activity";
     private static final int REQUEST_PERMISSION = 100;
@@ -57,6 +58,8 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
     Mat descriptors2,descriptors1;
     Mat img1;
     MatOfKeyPoint keypoints1,keypoints2;
+
+    public PermissionHelper mPermissionHelper;
 
     static {
         if (!OpenCVLoader.initDebug())
@@ -122,6 +125,10 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.layout);
 
+        mPermissionHelper = new PermissionHelper(MainActivity.this);
+
+        mPermissionHelper.requestPermissions(MainActivity.this,REQUEST_PERMISSION, new String[]{Manifest.permission.CAMERA});
+
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION);
         }
@@ -130,6 +137,7 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         tvName = (TextView) findViewById(R.id.text1);
+
 
     }
 
@@ -149,7 +157,7 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
 //            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_13, this, mLoaderCallback);
         } else {
             Log.d(TAG, "OpenCV library found inside package. Using it!");
-            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+//            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
     }
 
@@ -216,6 +224,16 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         return recognize(inputFrame.rgba());
+
+    }
+
+    @Override
+    public void requestPermissionSuccess(int requestPermissionCode, String... permissions) {
+
+    }
+
+    @Override
+    public void requestPermissionFail(int requestPermissionCode, String... permissions) {
 
     }
 }
