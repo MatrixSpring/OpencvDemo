@@ -134,10 +134,6 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
         }
 
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
-        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-        mOpenCvCameraView.setCvCameraViewListener(this);
-        tvName = (TextView) findViewById(R.id.text1);
-
 
     }
 
@@ -157,8 +153,12 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
 //            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_13, this, mLoaderCallback);
         } else {
             Log.d(TAG, "OpenCV library found inside package. Using it!");
-//            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
+        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+        mOpenCvCameraView.setCvCameraViewListener(this);
+
+        tvName = (TextView) findViewById(R.id.text1);
     }
 
     public void onDestroy() {
@@ -229,6 +229,7 @@ public class MainActivity extends Activity implements CameraBridgeViewBase.CvCam
 
     @Override
     public void requestPermissionSuccess(int requestPermissionCode, String... permissions) {
+        Log.d("requestPermissionCode","requestPermissionCode : requestPermissionCode");
 
     }
 
