@@ -1,21 +1,16 @@
 package com.epbox.opencv4android.ui;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.epbox.opencv4android.R;
-import com.epbox.opencv4android.helper.PermissionHelper;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -40,10 +35,8 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-//import org.opencv.core.DMatch;
 
-
-public class RecognitionImage extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 ,PermissionHelper.OnCallBack{
+public class RecognitionImage extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private static final String TAG = "OCVSample::Activity";
     private static final int REQUEST_PERMISSION = 100;
@@ -59,7 +52,6 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
     Mat img1;
     MatOfKeyPoint keypoints1,keypoints2;
 
-    public PermissionHelper mPermissionHelper;
 
     static {
         if (!OpenCVLoader.initDebug())
@@ -124,17 +116,7 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.layout);
-
-        mPermissionHelper = new PermissionHelper(RecognitionImage.this);
-
-        mPermissionHelper.requestPermissions(RecognitionImage.this,REQUEST_PERMISSION, new String[]{Manifest.permission.CAMERA});
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION);
-        }
-
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
-
     }
 
     @Override
@@ -227,14 +209,5 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
 
     }
 
-    @Override
-    public void requestPermissionSuccess(int requestPermissionCode, String... permissions) {
-        Log.d("requestPermissionCode","requestPermissionCode : requestPermissionCode");
 
-    }
-
-    @Override
-    public void requestPermissionFail(int requestPermissionCode, String... permissions) {
-
-    }
 }
