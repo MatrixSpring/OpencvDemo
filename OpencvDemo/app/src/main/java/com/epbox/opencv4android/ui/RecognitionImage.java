@@ -1,10 +1,14 @@
 package com.epbox.opencv4android.ui;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -22,6 +26,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDMatch;
 import org.opencv.core.MatOfKeyPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorExtractor;
@@ -34,6 +39,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+
+//import org.opencv.core.DMatch;
 
 
 public class RecognitionImage extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
@@ -116,7 +123,17 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.layout);
+
+//        mPermissionHelper = new PermissionHelper(RecognitionImage.this);
+//
+//        mPermissionHelper.requestPermissions(RecognitionImage.this,REQUEST_PERMISSION, new String[]{Manifest.permission.CAMERA});
+//
+//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION);
+//        }
+
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
+
     }
 
     @Override
@@ -205,8 +222,13 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-        return recognize(inputFrame.rgba());
+//        return recognize(inputFrame.rgba());
 
+        Mat dst = new Mat();
+        Mat gray = inputFrame.gray();
+        Mat rotateMat = Imgproc.getRotationMatrix2D(new Point(gray.rows()/2,gray.cols()/2), -90, 1);
+        Imgproc.warpAffine(gray, dst, rotateMat, dst.size());
+        return dst;
     }
 
 
