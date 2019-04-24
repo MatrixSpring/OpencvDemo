@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv_face = (TextView) findViewById(R.id.text_view_face_recognition);
+        tv_face = (TextView) findViewById(R.id.text_view_face);
 
         tv_face.setOnClickListener(this);
         permissionUtil = new PermissionUtil(MainActivity.this);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.text_view_face_recognition:{
+            case R.id.text_view_face:{
                 permissionUtil.requestPermissions(new String[]{Manifest.permission.CAMERA}, new PermissionListener() {
                     @Override
                     public void onGranted() {
@@ -53,8 +53,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
 
             } break;
-            case R.id.text_view_1:{
+            case R.id.text_view_gray:{
+                permissionUtil.requestPermissions(new String[]{Manifest.permission.CAMERA}, new PermissionListener() {
+                    @Override
+                    public void onGranted() {
+                        Intent intentFace = new Intent(MainActivity.this,FaceRecognitionActivity.class);
+                        startActivity(intentFace);
+                    }
 
+                    @Override
+                    public void onDenied(List<String> deniedPermission) {
+
+                    }
+
+                    @Override
+                    public void onShouldShowRationale(List<String> deniedPermission) {
+
+                    }
+                });
+            } break;
+            case R.id.text_view_card:{
+                permissionUtil.requestPermissions(new String[]{Manifest.permission.CAMERA}, new PermissionListener() {
+                    @Override
+                    public void onGranted() {
+                        Intent intentFace = new Intent(MainActivity.this,FaceRecognitionActivity.class);
+                        startActivity(intentFace);
+                    }
+
+                    @Override
+                    public void onDenied(List<String> deniedPermission) {
+
+                    }
+
+                    @Override
+                    public void onShouldShowRationale(List<String> deniedPermission) {
+
+                    }
+                });
             } break;
         }
     }

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_view_face_recognition"
+        android:id="@+id/text_view_gray"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="26dp"
@@ -15,19 +15,19 @@
         android:gravity="center"/>
 
     <TextView
-        android:id="@+id/text_view_1"
+        android:id="@+id/text_view_card"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="26dp"
-        android:text="Hello World!"
+        android:text="卡片识别"
         android:gravity="center"/>
 
     <TextView
-        android:id="@+id/text_view_2"
+        android:id="@+id/text_view_face"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="26dp"
-        android:text="Hello World!"
+        android:text="人脸识别"
         android:gravity="center"/>
 
 

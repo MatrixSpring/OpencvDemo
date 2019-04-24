@@ -174,61 +174,10 @@ public class FaceRecognitionActivity extends Activity implements CameraBridgeVie
     public void onCameraViewStopped() {
     }
 
-    public Mat recognize(Mat aInputFrame) {
-
-        Imgproc.cvtColor(aInputFrame, aInputFrame, Imgproc.COLOR_RGB2GRAY);
-        descriptors2 = new Mat();
-        keypoints2 = new MatOfKeyPoint();
-        detector.detect(aInputFrame, keypoints2);
-        descriptor.compute(aInputFrame, keypoints2, descriptors2);
-
-        // Matching
-        MatOfDMatch matches = new MatOfDMatch();
-        if (img1.type() == aInputFrame.type()) {
-            matcher.match(descriptors1, descriptors2, matches);
-        } else {
-            return aInputFrame;
-        }
-        List<DMatch> matchesList = matches.toList();
-
-        Double max_dist = 0.0;
-        Double min_dist = 100.0;
-
-        for (int i = 0; i < matchesList.size(); i++) {
-            Double dist = (double) matchesList.get(i).distance;
-            if (dist < min_dist)
-                min_dist = dist;
-            if (dist > max_dist)
-                max_dist = dist;
-        }
-
-        LinkedList<DMatch> good_matches = new LinkedList<DMatch>();
-        for (int i = 0; i < matchesList.size(); i++) {
-            if (matchesList.get(i).distance <= (1.5 * min_dist))
-                good_matches.addLast(matchesList.get(i));
-        }
-
-        MatOfDMatch goodMatches = new MatOfDMatch();
-        goodMatches.fromList(good_matches);
-        Mat outputImg = new Mat();
-        MatOfByte drawnMatches = new MatOfByte();
-        if (aInputFrame.empty() || aInputFrame.cols() < 1 || aInputFrame.rows() < 1) {
-            return aInputFrame;
-        }
-        Features2d.drawMatches(img1, keypoints1, aInputFrame, keypoints2, goodMatches, outputImg, GREEN, RED, drawnMatches, Features2d.NOT_DRAW_SINGLE_POINTS);
-        Imgproc.resize(outputImg, outputImg, aInputFrame.size());
-
-        return outputImg;
-    }
-
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-//        return recognize(inputFrame.rgba());
+        Mat mGray = inputFrame.gray();
 
-        Mat dst = new Mat();
-        Mat gray = inputFrame.gray();
-        Mat rotateMat = Imgproc.getRotationMatrix2D(new Point(gray.rows()/2,gray.cols()/2), -90, 1);
-        Imgproc.warpAffine(gray, dst, rotateMat, dst.size());
-        return dst;
+        return inputFrame.gray();
     }
 
 
