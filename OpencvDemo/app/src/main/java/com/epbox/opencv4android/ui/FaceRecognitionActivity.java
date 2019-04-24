@@ -43,7 +43,7 @@ import java.util.List;
 //import org.opencv.core.DMatch;
 
 
-public class RecognitionImage extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class FaceRecognitionActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private static final String TAG = "OCVSample::Activity";
     private static final int REQUEST_PERMISSION = 100;
@@ -109,7 +109,7 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
     }
 
 
-    public RecognitionImage() {
+    public FaceRecognitionActivity() {
         Log.i(TAG, "Instantiated new " + this.getClass());
     }
 
@@ -124,9 +124,9 @@ public class RecognitionImage extends Activity implements CameraBridgeViewBase.C
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.layout);
 
-//        mPermissionHelper = new PermissionHelper(RecognitionImage.this);
+//        mPermissionHelper = new PermissionHelper(FaceRecognitionActivity.this);
 //
-//        mPermissionHelper.requestPermissions(RecognitionImage.this,REQUEST_PERMISSION, new String[]{Manifest.permission.CAMERA});
+//        mPermissionHelper.requestPermissions(FaceRecognitionActivity.this,REQUEST_PERMISSION, new String[]{Manifest.permission.CAMERA});
 //
 //        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 //            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION);

@@ -6,18 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.epbox.opencv4android.permission.PermissionListener;
 import com.epbox.opencv4android.permission.PermissionUtil;
-import com.epbox.opencv4android.ui.RecognitionImage;
-
-import org.opencv.android.OpenCVLoader;
+import com.epbox.opencv4android.ui.FaceRecognitionActivity;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final String TAG = "RecognitionImage";
+    private static final String TAG = "FaceRecognitionActivity";
     private TextView tv_face;
     private PermissionUtil permissionUtil;
 
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 permissionUtil.requestPermissions(new String[]{Manifest.permission.CAMERA}, new PermissionListener() {
                     @Override
                     public void onGranted() {
-                        Intent intentFace = new Intent(MainActivity.this,RecognitionImage.class);
+                        Intent intentFace = new Intent(MainActivity.this,FaceRecognitionActivity.class);
                         startActivity(intentFace);
                     }
 

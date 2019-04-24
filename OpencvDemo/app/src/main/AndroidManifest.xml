@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.RecognitionImage"/>
+        <activity android:name=".ui.FaceRecognitionActivity"/>
 
     </application>
 
